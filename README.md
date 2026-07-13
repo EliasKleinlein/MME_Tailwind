@@ -1,69 +1,81 @@
-# 🚗 MEM Hypercars
+#######🚗 MEM Hypercars   #######
+___________________________________
+___________________________________
 
-Willkommen bei **MEM Hypercars**, einer modernen und luxuriösen Website für exklusive Supersportwagen.
+Willkommen bei **MEM Hypercars**, einer modernen Website für exklusive Supersportwagen.
 
-Dieses Projekt wurde im Rahmen der Umschulung zum **Software Engineer** erstellt und dient als Praxisprojekt für die Entwicklung einer responsiven Website mit **HTML**, **Tailwind CSS**, **Figma** und **GitHub**.
-
----
-
-## 👨‍💻 Projektteam
-
-- **Elias Kleinlein**
-- **Marco**
-- **Mario „Muju“ Kujoth**
+Dieses Projekt wurde im Rahmen der Umschulung zum **Software Engineer** entwickelt und dient als Praxisprojekt für die Umsetzung einer responsiven Website mit **HTML5**, **Tailwind CSS**, **Figma** und **GitHub**.
 
 ---
 
-## 🎯 Projektziel
+## Projektteam
+
+- Elias Kleinlein
+- Marco
+- Mario „Muju“ Kujoth
+
+---
+
+## Projektziel
 
 Entwicklung einer modernen und responsiven Website für einen Luxusauto-Showroom mit Fokus auf:
 
-- 🏎️ McLaren
-- 🏎️ Lamborghini
-- 🏎️ Ferrari
-- 🌙 Dark Mode
-- 📱 Mobile-First Design
-- 🎨 Eigenes Figma-Wireframe
-- 🌐 Veröffentlichung über GitHub Pages
+- McLaren
+- Lamborghini
+- Ferrari
+- Dark Mode
+- Mobile-First Design
+- Eigenes Figma-Wireframe
+- Veröffentlichung über GitHub Pages
 
 ---
 
 ## 🛠️ Verwendete Technologien
 
 - HTML5
-- Tailwind CSS
+- Tailwind CSS (CDN)
 - Figma
 - Git & GitHub
 - GitHub Pages
 
 ---
 
+## Kein JavaScript
+
+Dieses Projekt wurde bewusst **ohne JavaScript** entwickelt. Alle Inhalte und das Design wurden ausschließlich mit:
+
+- HTML5
+- Tailwind CSS
+
+umgesetzt.
+
+---
+
 ## 📋 Features
 
-- Modernes und luxuriöses Design
+- Modernes Luxusauto-Design
 - Responsive Website (Mobile First)
-- Hero-Bereich mit Supersportwagen
+- Hero-Bereich
 - Fahrzeug-Galerie
-- 360°-Showroom-Bereich
-- Kontaktformular
+- 360°-Showroom-Sektion
+- Kontaktbereich
 - Dark Mode
 
 ---
 
-## 📂 Projektstruktur
+## rojektstruktur
 
 ```text
 MEM_Hypercars/
 │
 ├── index.html
 ├── Bilder/
-├── README.md
-└── assets/
+└── README.md
 ```
 
 ---
 
-## 🚀 Installation
+## Projekt starten
 
 Repository klonen:
 
@@ -71,7 +83,7 @@ Repository klonen:
 git clone https://github.com/EliasKleinlein/MME_Tailwind.git
 ```
 
-Projekt öffnen:
+Projektordner öffnen:
 
 ```bash
 cd MME_Tailwind
@@ -91,14 +103,10 @@ http://localhost:8000
 
 ---
 
-## 📸 Vorschau
-
-Eine Live-Demo wird nach Fertigstellung über **GitHub Pages** veröffentlicht.
-
----
-
-## 📄 Lizenz
+## Lizenz
 
 Dieses Projekt wurde ausschließlich zu Lern- und Ausbildungszwecken erstellt.
+
+
 
 © 2026 Elias · Marco · Mario 
