@@ -1,81 +1,363 @@
 <!doctype html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MEM Hypercars</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEM Hypercars</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+ <!--==================--->
+    <!--Schriftarten-->
+ <!--===================-->
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap"
-      rel="stylesheet"
-    />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
 
-    <style>
-      body {
-        font-family: "Poppins", sans-serif;
-      }
 
-      .title {
-        font-family: "Bebas Neue", sans-serif;
-      }
-    </style>
-  </head>
+<style>
+.neon-text {
+  font-family: 'Cinzel', serif; /* oder Audiowide */
+  font-size: 3rem;              /* größer */
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px #d4af37;
+  letter-spacing: 0.3em;
+  white-space: nowrap;
+  transition: all 0.4s ease;
+}
 
-  <body class="bg-black text-white">
-    <!-- NAVBAR -->
-    <header class="bg-zinc-900">
-      <nav class="max-w-7xl mx-auto flex justify-between items-center p-6">
-        <h1 class="title text-5xl text-yellow-500">MEM HYPERCARS</h1>
+.neon-text:hover {
+  color: #a855f7;
+  -webkit-text-stroke: 1px #a855f7;
+  text-shadow:
+    0 0 5px #a855f7,
+    0 0 10px #a855f7,
+    0 0 20px #a855f7,
+    0 0 40px #a855f7,
+    0 0 80px #a855f7;
+}
 
-        <ul class="hidden md:flex gap-8 font-semibold">
-          <li><a href="#" class="hover:text-yellow-500">Home</a></li>
-          <li><a href="#" class="hover:text-yellow-500">Fahrzeuge</a></li>
-          <li>
-            <a href="galery.html" class="hover:text-yellow-500">Galerie</a>
-          </li>
-          <li><a href="#" class="hover:text-yellow-500">Über uns</a></li>
-          <li>
-            <a href="kontact.html" class="hover:text-yellow-500">Kontakt</a>
-          </li>
-        </ul>
-      </nav>
-    </header>
+.hero-title {
+  font-family: 'Cinzel', serif; /* oder Audiowide */
+  font-size: 4rem;
+  font-weight: 700;
+  color: transparent;
+  -webkit-text-stroke: 1px #d4af37;
+  text-shadow: 0 0 5px rgba(212, 175, 55, 0.2);
+  transition: all 0.4s ease;
+}
 
-    <!-- HERO -->
-    <section class="max-w-7xl mx-auto py-20 px-6 text-center">
-      <h2 class="title text-7xl mb-4">DRIVE YOUR DREAM</h2>
+.hero-title:hover {
+  color: #a855f7;
+  -webkit-text-stroke: 1px #a855f7;
+  text-shadow:
+    0 0 5px #a855f7,
+    0 0 10px #a855f7,
+    0 0 20px #a855f7,
+    0 0 40px #a855f7;
+}
 
-      <p class="text-xl text-gray-300 mb-8">Luxury. Performance. Perfection.</p>
+.smoke-container {
+  position: relative;
+  display: inline-block;
+}
 
-      <button
-        class="bg-yellow-500 text-black px-8 py-4 rounded-xl font-bold hover:scale-105 transition"
-      >
-        Jetzt entdecken
-      </button>
+.smoke {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  filter: blur(30px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 100;
+}
 
-      <img
-        src="images/hero.jpg"
-        alt="McLaren"
-        class="mt-12 rounded-3xl shadow-2xl w-full"
-      />
-    </section>
+.smoke1 {
+  left: 20%;
+  bottom: -40px;
+}
 
-    <!-- TOP MODELLE -->
-    <section class="max-w-7xl mx-auto py-20 px-6">
-      <h2 class="title text-5xl text-center mb-12">TOP MODELLE</h2>
+.smoke2 {
+  left: 45%;
+  bottom: -40px;
+}
 
-      <div class="grid md:grid-cols-3 gap-10">
-        <div class="bg-zinc-900 rounded-3xl overflow-hidden">
-          <img src="images/mclaren.jpg" alt="" />
-          <div class="p-6">
-            <h3 class="text-2xl font-bold mb-3">McLaren Senna</h3>
-            <p>800 PS</p>
-            <p>340 km/h</p>
-          </div>
+.smoke3 {
+  left: 70%;
+  bottom: -40px;
+}
+
+.smoke2 {
+  left: 45%;
+  bottom: -20px;
+}
+
+.smoke3 {
+  left: 70%;
+  bottom: -20px;
+}
+
+.smoke-container:hover .smoke {
+  animation: smoke 2s infinite;
+}
+
+.smoke2 {
+  animation-delay: 0.4s;
+}
+
+.smoke3 {
+  animation-delay: 0.8s;
+}
+
+@keyframes smoke {
+  0% {
+    transform: translateY(0) scale(0.5);
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 0.4;
+  }
+
+  100% {
+  transform: translateY(-250px) scale(3);
+  opacity: 0;
+  }
+}
+</style> 
+</head>
+<body class="bg-black text-white scroll-smooth">
+
+<!--===============================-->  
+  <!-- HERO MIT HINTERGRUND -->
+<!--===============================-->
+<header class="relative w-full">
+
+ <!--==============================-->
+      <!-- Hintergrundbild -->
+ <!--==============================-->
+
+
+  <img
+    src="Bilder/Hintergrund.Navi.jpeg"
+    alt="MEM Hypercars"
+    class="w-full h-screen object-cover">
+
+  <!-- Dunkler Overlay -->
+  <div class="absolute inset-0 bg-black/40"></div>
+
+ 
+  <!-- Logo -->
+ 
+<a href="#" class="absolute top-4 left-4 z-50 flex flex-col items-center">
+
+  <img
+    src="Bilder/Logo.png"
+    alt="MEM Hypercars Logo"
+    class="w-[380px] h-auto">
+
+  <div class="group relative">
+
+  <span class="-mt-8 neon-text text-2xl cursor-pointer">
+    DRIVE YOUR DREAM
+  </span>
+
+<!--==========================-->
+    <!-- Hypercar-Panel -->
+<!--==========================-->
+
+  <div
+    class="
+      absolute left-1/2 top-14
+      -translate-x-1/2
+      flex gap-8
+      p-6
+      rounded-[30px]
+      bg-black/40
+      backdrop-blur-2xl
+      border border-yellow-500/30
+      shadow-[0_0_40px_rgba(234,179,8,0.2)]
+
+      opacity-0
+      scale-95
+      pointer-events-none
+
+      transition-all duration-500
+
+      group-hover:opacity-100
+      group-hover:scale-100
+      group-hover:pointer-events-auto
+
+      z-50
+    ">
+
+    <img src="Bilder/mclaren-logo.png"
+         class="w-16 transition-all duration-500
+                hover:scale-125
+                hover:drop-shadow-[0_0_25px_#39ff14]">
+
+    <img src="Bilder/ferrari-logo.png"
+         class="w-16 transition-all duration-500
+                hover:scale-125
+                hover:drop-shadow-[0_0_25px_#39ff14]">
+
+    <img src="Bilder/lambo-logo.png"
+         class="w-16 transition-all duration-500
+                hover:scale-125
+                hover:drop-shadow-[0_0_25px_#39ff14]">
+
+    <img src="Bilder/jaguar-logo.png"
+         class="w-16 transition-all duration-500
+                hover:scale-125
+                hover:drop-shadow-[0_0_25px_#39ff14]">
+
+  </div>
+
+</div>
+
+</a>
+
+<!--==============================-->
+        <!-- Navigation -->
+<!--==============================-->
+ 
+  <nav class="absolute top-6 right-10 z-50">
+    <ul class="hidden md:flex items-center gap-4">
+
+      <li>
+        <a href="#"
+          class="flex items-center justify-center
+                 w-32 h-12 rounded-xl
+                 bg-white/5 backdrop-blur-lg
+                 border border-yellow-500/40
+                 shadow-[0_0_5px_rgba(234,179,8,0.2)]
+                 text-white font-semibold
+                 transition-all duration-500
+                 hover:scale-105
+                 hover:border-yellow-300
+                 hover:shadow-[0_0_20px_rgba(168,85,247,0.8)]">
+          Home
+        </a>
+      </li>
+
+      <li>
+        <a href="#"
+          class="flex items-center justify-center
+                 w-32 h-12 rounded-xl
+                 bg-white/5 backdrop-blur-lg
+                 border border-yellow-500/40
+                 shadow-[0_0_5px_rgba(234,179,8,0.2)]
+                 text-white font-semibold
+                 transition-all duration-500
+                 hover:scale-105
+                 hover:shadow-[0_0_20px_rgba(168,85,247,0.8)]">
+          Galerie
+        </a>
+      </li>
+
+      <li>
+        <a href="#"
+          class="flex items-center justify-center
+                 w-32 h-12 rounded-xl
+                 bg-white/5 backdrop-blur-lg
+                 border border-yellow-500/40
+                 shadow-[0_0_5px_rgba(234,179,8,0.2)]
+                 text-white font-semibold
+                 transition-all duration-500
+                 hover:scale-105
+                 hover:shadow-[0_0_20px_rgba(168,85,247,0.8)]">
+          Über uns
+        </a>
+      </li>
+
+      <li>
+        <a href="#"
+          class="flex items-center justify-center
+                 w-32 h-12 rounded-xl
+                 bg-white/5 backdrop-blur-lg
+                 border border-yellow-500/40
+                 shadow-[0_0_5px_rgba(234,179,8,0.2)]
+                 text-white font-semibold
+                 transition-all duration-500
+                 hover:scale-105
+                 hover:shadow-[0_0_20px_rgba(168,85,247,0.8)]">
+          Kontakt
+        </a>
+      </li>
+
+    </ul>
+  </nav>
+<!--=========================-->
+       <!-- Hero Text -->
+<!--=========================-->
+  <div class="absolute inset-0 z-40 flex flex-col items-center justify-center text-center">
+
+    <div class="smoke-container">
+      <h1 class="neon-text">
+        Performens - Luxus - Power
+      </h1>
+
+      <div class="smoke smoke1"></div>
+      <div class="smoke smoke2"></div>
+      <div class="smoke smoke3"></div>
+    </div>
+
+    <p class="text-2xl text-gray-300 mb-8">
+      
+    </p>
+
+    <a
+  href="#showroom"
+  class="
+    inline-flex items-center justify-center
+    px-10 py-4
+    rounded-2xl
+    bg-black/30
+    backdrop-blur-xl
+    border border-yellow-500/50
+    text-yellow-400
+    font-bold text-lg
+    transition-all duration-500
+    hover:scale-110
+    hover:text-white
+    hover:border-purple-500
+    hover:bg-purple-500/20
+    hover:shadow-[0_0_40px_rgba(168,85,247,1)]
+  ">
+  Jetzt entdecken
+</a>
+
+  </div>
+
+</header>
+<!--===========================-->   
+        <!-- TOP MODELLE -->
+<!--===========================-->
+  <section class="max-w-7xl mx-auto py-20 px-6">
+
+    <h2 class="title text-5xl text-center mb-12">
+      TOP MODELLE
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-10">
+
+      <div class="bg-zinc-900 rounded-3xl overflow-hidden">
+        <img src="images/mclaren.jpg" alt="">
+        <div class="p-6">
+          <h3 class="text-2xl font-bold mb-3">
+            McLaren Senna
+          </h3>
+          <p>800 PS</p>
+          <p>340 km/h</p>
         </div>
 
         <div class="bg-zinc-900 rounded-3xl overflow-hidden">
@@ -106,10 +388,18 @@
           <p>Verkaufte Fahrzeuge</p>
         </div>
 
-        <div>
-          <h3 class="text-6xl font-bold text-yellow-500">15</h3>
-          <p>Jahre Erfahrung</p>
-        </div>
+    </div>
+
+  </section>
+
+  <!--###############################-->
+      <!-- WARUM MEM HYPERCARS -->
+  <!--###############################-->
+   
+
+  <section class="bg-zinc-900 py-20">
+
+    <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-10 text-center">
 
         <div>
           <h3 class="text-6xl font-bold text-yellow-500">100%</h3>
@@ -129,9 +419,135 @@
       </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="bg-zinc-900 py-10 text-center">
-      <p>© 2026 MEM HYPERCARS</p>
-    </footer>
-  </body>
+    </div>
+
+  </section>
+
+<!--=============================-->
+        <!-- SHOWROOM -->
+<!--=============================-->
+
+  <section
+  id="showroom"
+  class="
+    w-full
+    min-h-screen
+    py-20
+  "
+>
+
+  <h2 class="hero-title text-center mb-20">
+    EXCLUSIVE SHOWROOM
+  </h2>
+
+  <div class="
+  flex
+  justify-center
+  items-end
+  gap-8
+  w-full
+  max-w-[1800px]
+  mx-auto
+">
+  <a href="Bilder/Karte.1.jpg" target="_blank">
+  <img
+    src="Bilder/Karte.1.jpg"
+    class="
+      w-[380px]
+      translate-x-6
+      rounded-3xl
+      transition-all duration-500
+      hover:scale-110
+      hover:shadow-[0_0_80px_#00e5ff]
+      cursor-pointer
+    ">
+</a>
+    <a href="Bilder/Karte.2.jpg" target="_blank"></a>
+    <img src="Bilder/Karte.2.jpg"
+      class="
+        w-[380px]
+        rounded-3xl
+        transition-all duration-500
+        hover:scale-110
+        hover:shadow-[0_0_20px_#00e5ff]
+        hover:shadow-[0_0_80px_#00bfff]
+        cursor-pointer
+        
+      ">
+
+
+    <img src="Bilder/Karte.3.jpg"
+      class="
+        w-[380px]
+        rounded-3xl
+        opacity-70
+        transition-all duration-500
+        hover:scale-110
+        hover:opacity-100
+        hover:shadow-[0_0_20px_#00e5ff]
+        hover:shadow-[0_0_80px_#00bfff]
+        cursor-pointer
+      ">
+
+    <img src="Bilder/Karte.4.jpg"
+      class="
+        w-[405px]
+        rounded-3xl
+        opacity-70
+        transition-all duration-500
+        hover:scale-110
+        hover:opacity-100
+        hover:shadow-[0_0_80px_#00e5ff]
+        cursor-pointer
+      ">
+
+  </div>
+
+</section>
+
+<!--===============================-->   
+         <!-- KONTAKT -->
+<!--===============================-->
+
+  <section class="max-w-7xl mx-auto py-20 px-6">
+
+    <h2 class="title text-5xl mb-10">
+      KONTAKT
+    </h2>
+
+    <form class="space-y-6">
+
+      <input
+        type="text"
+        placeholder="Name"
+        class="w-full p-4 rounded-xl bg-zinc-900">
+
+      <input
+        type="email"
+        placeholder="E-Mail"
+        class="w-full p-4 rounded-xl bg-zinc-900">
+
+      <textarea
+        rows="5"
+        placeholder="Nachricht"
+        class="w-full p-4 rounded-xl bg-zinc-900"></textarea>
+
+      <button
+        class="bg-yellow-500 text-black px-8 py-4 rounded-xl font-bold">
+        Termin vereinbaren
+      </button>
+
+    </form>
+
+  </section>
+
+<!--==========================-->  
+      <!-- FOOTER -->
+<!--==========================-->
+
+  <footer class="bg-zinc-900 py-10 text-center">
+    <p>© 2026 MEM HYPERCARS</p>
+  </footer>
+
+</body>
 </html>
