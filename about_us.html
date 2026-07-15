@@ -1,0 +1,203 @@
+<!doctype html>
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Über uns | MEM Hypercars</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+
+      .title {
+        font-family: "Bebas Neue", sans-serif;
+      }
+    </style>
+  </head>
+
+  <body class="bg-black text-white">
+    <!--================================-->
+    <!-- FESTES HINTERGRUNDBILD -->
+    <!--================================-->
+
+    <div class="fixed inset-0 -z-20">
+      <img
+        src="Bilder/Hintergrund.Navi.jpeg"
+        alt="MEM Hypercars"
+        class="h-full w-full object-cover"
+      />
+    </div>
+
+    <!-- Dunkler Overlay über dem Hintergrundbild -->
+
+    <div class="fixed inset-0 -z-10 bg-black/40"></div>
+
+    <!--================================-->
+    <!-- ERSTER BILDSCHIRMBEREICH -->
+    <!--================================-->
+
+    <header class="relative h-[42vh] w-full">
+      <!--================================-->
+      <!-- LOGO -->
+      <!--================================-->
+
+      <a
+        href="index.html"
+        class="fixed left-4 top-4 z-50 flex flex-col items-center"
+      >
+        <img
+          src="Bilder/Logo.png"
+          alt="MEM Hypercars Logo"
+          class="h-auto w-[380px]"
+        />
+
+        <div class="group relative">
+          <!--================================-->
+          <!-- HYPERCAR-PANEL -->
+          <!--================================-->
+
+          <div
+            class="pointer-events-none absolute left-1/2 top-14 z-50 flex -translate-x-1/2 scale-95 gap-8 rounded-[30px] border border-yellow-500/30 bg-black/40 p-6 opacity-0 shadow-[0_0_40px_rgba(234,179,8,0.2)] backdrop-blur-2xl transition-all duration-500 group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100"
+          >
+            <img
+              src="Bilder/mclaren-logo.png"
+              alt="McLaren Logo"
+              class="w-16 transition-all duration-500 hover:scale-125 hover:drop-shadow-[0_0_25px_#39ff14]"
+            />
+
+            <img
+              src="Bilder/ferrari-logo.png"
+              alt="Ferrari Logo"
+              class="w-16 transition-all duration-500 hover:scale-125 hover:drop-shadow-[0_0_25px_#39ff14]"
+            />
+
+            <img
+              src="Bilder/lambo-logo.png"
+              alt="Lamborghini Logo"
+              class="w-16 transition-all duration-500 hover:scale-125 hover:drop-shadow-[0_0_25px_#39ff14]"
+            />
+
+            <img
+              src="Bilder/jaguar-logo.png"
+              alt="Jaguar Logo"
+              class="w-16 transition-all duration-500 hover:scale-125 hover:drop-shadow-[0_0_25px_#39ff14]"
+            />
+          </div>
+        </div>
+      </a>
+
+      <!--================================-->
+      <!-- FIXIERTE NAVIGATION -->
+      <!--================================-->
+
+      <nav class="fixed right-10 top-6 z-50">
+        <ul class="hidden items-center gap-4 md:flex">
+          <li>
+            <a
+              href="index.html"
+              class="flex h-12 w-32 items-center justify-center rounded-xl border border-yellow-500/40 bg-white/5 font-semibold text-white shadow-[0_0_5px_rgba(234,179,8,0.2)] backdrop-blur-lg transition-all duration-500 hover:scale-105 hover:border-yellow-300 hover:shadow-[0_0_20px_rgba(168,85,247,0.8)]"
+            >
+              Home
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="galery.html"
+              class="flex h-12 w-32 items-center justify-center rounded-xl border border-yellow-500/40 bg-white/5 font-semibold text-white shadow-[0_0_5px_rgba(234,179,8,0.2)] backdrop-blur-lg transition-all duration-500 hover:scale-105 hover:border-purple-400 hover:bg-purple-500/20 hover:shadow-[0_0_20px_rgba(168,85,247,0.8)]"
+            >
+              Galerie
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="about_us.html"
+              class="flex h-12 w-32 items-center justify-center rounded-xl border border-purple-400 bg-purple-500/20 font-semibold text-white shadow-[0_0_20px_rgba(168,85,247,0.8)] backdrop-blur-lg transition-all duration-500 hover:scale-105"
+            >
+              Über uns
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="kontact.html"
+              class="flex h-12 w-32 items-center justify-center rounded-xl border border-yellow-500/40 bg-white/5 font-semibold text-white shadow-[0_0_5px_rgba(234,179,8,0.2)] backdrop-blur-lg transition-all duration-500 hover:scale-105 hover:border-yellow-300 hover:shadow-[0_0_20px_rgba(168,85,247,0.8)]"
+            >
+              Kontakt
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!--================================-->
+    <!-- ÜBER-UNS-INHALT -->
+    <!--================================-->
+
+    <main class="relative z-10">
+      <section
+        class="min-h-screen border-t border-yellow-500/20 bg-black/80 px-6 py-20"
+      >
+        <div class="mx-auto max-w-[1500px]">
+          <div class="mb-16 text-center">
+            <p
+              class="mb-4 text-xs font-semibold uppercase tracking-[0.55em] text-yellow-400"
+            >
+              MEM Hypercars
+            </p>
+
+            <h1 class="title text-6xl uppercase tracking-wider md:text-8xl">
+              Über uns
+            </h1>
+
+            <div
+              class="mx-auto mt-6 h-px w-48 bg-gradient-to-r from-transparent via-yellow-400 to-transparent"
+            ></div>
+
+            <p
+              class="mx-auto mt-7 max-w-3xl text-sm leading-7 text-zinc-400 md:text-base"
+            >
+              Hier wird später der Inhalt der Über-uns-Seite eingefügt.
+            </p>
+          </div>
+
+          <!--================================-->
+          <!-- HIER KOMMT DER SEITENINHALT HIN -->
+          <!--================================-->
+
+          <div
+            class="rounded-[30px] border border-yellow-500/20 bg-black/60 p-8 backdrop-blur-xl md:p-12"
+          >
+            <h2 class="title text-4xl uppercase tracking-wider md:text-5xl">
+              Unsere Geschichte
+            </h2>
+
+            <p class="mt-6 max-w-4xl leading-8 text-zinc-300">Inhalt folgt.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!--================================-->
+    <!-- FOOTER -->
+    <!--================================-->
+
+    <footer class="relative z-10 bg-zinc-950 py-10 text-center">
+      <p>© 2026 MEM HYPERCARS</p>
+    </footer>
+  </body>
+</html>
