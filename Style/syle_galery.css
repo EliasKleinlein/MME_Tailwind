@@ -104,6 +104,67 @@
   box-shadow: 0 0 25px rgba(var(--accent), 0.25);
 }
 
+/* =========================================
+   FULLSCREEN-BILD PER KLICK
+========================================= */
+
+.zoom-toggle {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.zoom-label {
+  display: block;
+  cursor: zoom-in;
+}
+
+.zoom-toggle:checked + .zoom-label {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.96);
+  cursor: zoom-out;
+}
+
+.zoom-toggle:checked + .zoom-label .vehicle-media {
+  width: min(95vw, 1600px);
+  height: 92vh;
+  min-height: 0;
+  border-radius: 0;
+  transform: none;
+  background: transparent;
+}
+
+.zoom-toggle:checked + .zoom-label .vehicle-image {
+  object-fit: contain;
+  transform: none;
+}
+
+.zoom-toggle:checked + .zoom-label .vehicle-media::after,
+.zoom-toggle:checked + .zoom-label .vehicle-number {
+  display: none;
+}
+
+.zoom-toggle:checked + .zoom-label .vehicle-image-primary,
+.zoom-toggle:checked + .zoom-label .vehicle-image-secondary {
+  animation-play-state: paused;
+}
+
+body:has(.zoom-toggle:checked) {
+  overflow: hidden;
+}
+
+/* =========================================
+   AUTOMATISCHER BILDWECHSEL
+========================================= */
+
 @keyframes image-primary {
   0%,
   42% {
@@ -136,6 +197,10 @@
   }
 }
 
+/* =========================================
+   REDUZIERTE BEWEGUNG
+========================================= */
+
 @media (prefers-reduced-motion: reduce) {
   .vehicle-image-primary,
   .vehicle-image-secondary {
@@ -146,6 +211,10 @@
     opacity: 0;
   }
 }
+
+/* =========================================
+   TABLET UND MOBIL
+========================================= */
 
 @media (max-width: 1023px) {
   .vehicle-media {
@@ -159,5 +228,14 @@
   .vehicle-details {
     opacity: 1;
     transform: none;
+  }
+
+  .zoom-toggle:checked + .zoom-label {
+    padding: 12px;
+  }
+
+  .zoom-toggle:checked + .zoom-label .vehicle-media {
+    width: 100%;
+    height: 100%;
   }
 }
