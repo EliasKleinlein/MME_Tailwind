@@ -12,6 +12,7 @@
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Poppins:wght@300;400;600;700&amp;display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="Style/syle_galery.css" />
     <style>
       body {
         font-family: "Poppins", sans-serif;
@@ -70,11 +71,14 @@
       }
 
       .vehicle-image-primary {
-        animation: vehicle-image-primary 10s infinite;
+        z-index: 1;
+        opacity: 1;
       }
 
       .vehicle-image-secondary {
-        animation: vehicle-image-secondary 10s infinite;
+        z-index: 2;
+        opacity: 0;
+        animation: vehicle-image-secondary 12s ease-in-out infinite;
       }
 
       .vehicle-media::after {
@@ -196,13 +200,15 @@
 
       @keyframes vehicle-image-secondary {
         0%,
-        42% {
+        40% {
           opacity: 0;
         }
+
         50%,
-        92% {
+        90% {
           opacity: 1;
         }
+
         100% {
           opacity: 0;
         }
@@ -226,17 +232,6 @@
       @media (max-width: 640px) {
         .vehicle-media {
           height: 280px;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .vehicle-image-primary,
-        .vehicle-image-secondary {
-          animation: none;
-        }
-
-        .vehicle-image-secondary {
-          opacity: 0;
         }
       }
     </style>
@@ -324,7 +319,7 @@
           <li>
             <a
               class="flex h-12 w-32 items-center justify-center rounded-xl border border-yellow-500/40 bg-white/5 font-semibold text-white shadow-[0_0_5px_rgba(234,179,8,0.2)] backdrop-blur-lg transition-all duration-500 hover:scale-105 hover:border-yellow-300 hover:shadow-[0_0_20px_rgba(168,85,247,0.8)]"
-              href="#"
+              href="about_us.html"
             >
               Über uns
             </a>
@@ -1223,7 +1218,7 @@
                 <img
                   alt="Pininfarina PF0 – Ansicht 2"
                   class="vehicle-image vehicle-image-secondary"
-                  src="Galeriebilder/Pininfarina PF0 _2.jpeg"
+                  src="Galeriebilder/Pininfarina PF0 _2.png"
                 />
                 <span
                   class="vehicle-number absolute bottom-5 left-7 z-10 title text-7xl"

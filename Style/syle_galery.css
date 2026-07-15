@@ -27,11 +27,14 @@
 }
 
 .vehicle-image-primary {
-  animation: image-primary 10s infinite;
+  z-index: 1;
+  opacity: 1;
 }
 
 .vehicle-image-secondary {
-  animation: image-secondary 10s infinite;
+  z-index: 2;
+  opacity: 0;
+  animation: image-secondary 12s ease-in-out infinite;
 }
 
 .vehicle:hover .vehicle-image {
@@ -161,53 +164,18 @@ body:has(.zoom-toggle:checked) {
   overflow: hidden;
 }
 
-/* =========================================
-   AUTOMATISCHER BILDWECHSEL
-========================================= */
-
-@keyframes image-primary {
-  0%,
-  42% {
-    opacity: 1;
-  }
-
-  50%,
-  92% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
 @keyframes image-secondary {
   0%,
-  42% {
+  40% {
     opacity: 0;
   }
 
   50%,
-  92% {
+  90% {
     opacity: 1;
   }
 
   100% {
-    opacity: 0;
-  }
-}
-
-/* =========================================
-   REDUZIERTE BEWEGUNG
-========================================= */
-
-@media (prefers-reduced-motion: reduce) {
-  .vehicle-image-primary,
-  .vehicle-image-secondary {
-    animation: none;
-  }
-
-  .vehicle-image-secondary {
     opacity: 0;
   }
 }
