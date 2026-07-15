@@ -1,19 +1,17 @@
 <!doctype html>
+
 <html lang="de">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MEM Hypercars</title>
-
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Galerie | MEM Hypercars</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Poppins:wght@300;400;600;700&amp;display=swap"
       rel="stylesheet"
     />
-
     <style>
       body {
         font-family: "Poppins", sans-serif;
@@ -22,31 +20,1701 @@
       .title {
         font-family: "Bebas Neue", sans-serif;
       }
+
+      /* ========================================
+         GALERIE: BILDER, WECHSEL UND ZOOM
+      ======================================== */
+
+      .vehicle {
+        --accent: 234 179 8;
+        position: relative;
+      }
+
+      .vehicle-media {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 430px;
+        overflow: hidden;
+        cursor: zoom-in;
+        border: 1px solid rgba(var(--accent), 0.28);
+        background: rgba(9, 9, 11, 0.96);
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.38);
+        transition:
+          transform 0.55s ease,
+          border-color 0.55s ease,
+          box-shadow 0.55s ease;
+      }
+
+      .vehicle-media:hover {
+        z-index: 20;
+        transform: scale(1.045);
+        border-color: rgba(var(--accent), 0.75);
+        box-shadow:
+          0 0 45px rgba(var(--accent), 0.2),
+          0 35px 90px rgba(0, 0, 0, 0.65);
+      }
+
+      .vehicle-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.8s ease;
+      }
+
+      .vehicle-media:hover .vehicle-image {
+        transform: scale(1.06);
+      }
+
+      .vehicle-image-primary {
+        animation: vehicle-image-primary 10s infinite;
+      }
+
+      .vehicle-image-secondary {
+        animation: vehicle-image-secondary 10s infinite;
+      }
+
+      .vehicle-media::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.72),
+          transparent 55%
+        );
+      }
+
+      .vehicle-number {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(var(--accent), 0.72);
+      }
+
+      .vehicle-info {
+        position: relative;
+        z-index: 10;
+        max-height: 260px;
+        overflow: hidden;
+        border: 1px solid rgba(var(--accent), 0.3);
+        background: rgba(9, 9, 11, 0.78);
+        backdrop-filter: blur(18px);
+        transition:
+          max-height 0.7s ease,
+          transform 0.55s ease,
+          border-color 0.55s ease,
+          background 0.55s ease,
+          box-shadow 0.55s ease;
+      }
+
+      .vehicle:hover .vehicle-info {
+        max-height: 680px;
+        transform: scale(1.02);
+        border-color: rgba(var(--accent), 0.75);
+        background: rgba(9, 9, 11, 0.95);
+        box-shadow:
+          0 0 45px rgba(var(--accent), 0.15),
+          0 30px 70px rgba(0, 0, 0, 0.5);
+      }
+
+      .vehicle-details {
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+          opacity 0.45s ease 0.08s,
+          transform 0.45s ease 0.08s;
+      }
+
+      .vehicle:hover .vehicle-details {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .vehicle-calendar {
+        border-color: rgba(var(--accent), 0.4);
+        color: rgb(var(--accent));
+      }
+
+      .vehicle-calendar:hover {
+        border-color: rgba(var(--accent), 0.9);
+        background: rgba(var(--accent), 0.14);
+        box-shadow: 0 0 28px rgba(var(--accent), 0.25);
+      }
+
+      .zoom-toggle {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .zoom-toggle:checked ~ .vehicle-media {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        width: 100vw;
+        height: 100vh;
+        border: 0;
+        border-radius: 0;
+        cursor: zoom-out;
+        transform: none;
+        background: rgba(0, 0, 0, 0.97);
+        box-shadow: none;
+      }
+
+      .zoom-toggle:checked ~ .vehicle-media .vehicle-image {
+        object-fit: contain;
+        transform: none;
+      }
+
+      .zoom-toggle:checked ~ .vehicle-media::after {
+        background: transparent;
+      }
+
+      .zoom-toggle:checked ~ .vehicle-media .vehicle-number {
+        display: none;
+      }
+
+      @keyframes vehicle-image-primary {
+        0%,
+        42% {
+          opacity: 1;
+        }
+        50%,
+        92% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes vehicle-image-secondary {
+        0%,
+        42% {
+          opacity: 0;
+        }
+        50%,
+        92% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 1023px) {
+        .vehicle-media {
+          height: 360px;
+        }
+
+        .vehicle-info {
+          max-height: none;
+        }
+
+        .vehicle-details {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .vehicle-media {
+          height: 280px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .vehicle-image-primary,
+        .vehicle-image-secondary {
+          animation: none;
+        }
+
+        .vehicle-image-secondary {
+          opacity: 0;
+        }
+      }
     </style>
   </head>
-
   <body class="bg-black text-white">
-    <!-- NAVBAR -->
-    <header class="bg-zinc-900">
-      <nav class="max-w-7xl mx-auto flex justify-between items-center p-6">
-        <h1 class="title text-5xl text-yellow-500">MEM HYPERCARS</h1>
-
-        <ul class="hidden md:flex gap-8 font-semibold">
-          <li><a href="#" class="hover:text-yellow-500">Home</a></li>
-          <li><a href="#" class="hover:text-yellow-500">Fahrzeuge</a></li>
+    <!--================================-->
+    <!-- FESTES HINTERGRUNDBILD -->
+    <!--================================-->
+    <div class="fixed inset-0 -z-20">
+      <img
+        alt="MEM Hypercars"
+        class="h-full w-full object-cover"
+        src="Bilder/Hintergrund.Navi.jpeg"
+      />
+    </div>
+    <!-- Dunkler Overlay über dem Hintergrundbild -->
+    <div class="fixed inset-0 -z-10 bg-black/40"></div>
+    <!--================================-->
+    <!-- ERSTER BILDSCHIRMBEREICH -->
+    <!--================================-->
+    <header class="relative h-[42vh] w-full">
+      <!--================================-->
+      <!-- LOGO -->
+      <!--================================-->
+      <a
+        class="fixed left-4 top-4 z-50 flex flex-col items-center"
+        href="index.html"
+      >
+        <img
+          alt="MEM Hypercars Logo"
+          class="h-auto w-[380px]"
+          src="Bilder/Logo.png"
+        />
+        <div class="group relative">
+          <!--================================-->
+          <!-- HYPERCAR-PANEL -->
+          <!--================================-->
+          <div
+            class="pointer-events-none absolute left-1/2 top-14 z-50 flex -translate-x-1/2 scale-95 gap-8 rounded-[30px] border border-yellow-500/30 bg-black/40 p-6 opacity-0 shadow-[0_0_40px_rgba(234,179,8,0.2)] backdrop-blur-2xl transition-all duration-500 group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100"
+          >
+            <img
+              alt="McLaren Logo"
+              class="w-16 transition-all duration-500 hover:scale-125 hover:drop-shadow-[0_0_25px_#39ff14]"
+              src="Bilder/mclaren-logo.png"
+            />
+            <img
+              alt="Ferrari Logo"
+              class="w-16 transition-all duration-500 hover:scale-125 hover:drop-shadow-[0_0_25px_#39ff14]"
+              src="Bilder/ferrari-logo.png"
+            />
+            <img
+              alt="Lamborghini Logo"
+              class="w-16 transition-all duration-500 hover:scale-125 hover:drop-shadow-[0_0_25px_#39ff14]"
+              src="Bilder/lambo-logo.png"
+            />
+            <img
+              alt="Jaguar Logo"
+              class="w-16 transition-all duration-500 hover:scale-125 hover:drop-shadow-[0_0_25px_#39ff14]"
+              src="Bilder/jaguar-logo.png"
+            />
+          </div>
+        </div>
+      </a>
+      <!--================================-->
+      <!-- FIXIERTE NAVIGATION -->
+      <!--================================-->
+      <nav class="fixed right-10 top-6 z-50">
+        <ul class="hidden items-center gap-4 md:flex">
           <li>
-            <a href="galery.html" class="hover:text-yellow-500">Galerie</a>
+            <a
+              class="flex h-12 w-32 items-center justify-center rounded-xl border border-yellow-500/40 bg-white/5 font-semibold text-white shadow-[0_0_5px_rgba(234,179,8,0.2)] backdrop-blur-lg transition-all duration-500 hover:scale-105 hover:border-yellow-300 hover:shadow-[0_0_20px_rgba(168,85,247,0.8)]"
+              href="index.html"
+            >
+              Home
+            </a>
           </li>
-          <li><a href="#" class="hover:text-yellow-500">Über uns</a></li>
           <li>
-            <a href="kontact.html" class="hover:text-yellow-500">Kontakt</a>
+            <a
+              class="flex h-12 w-32 items-center justify-center rounded-xl border border-yellow-500/40 bg-white/5 font-semibold text-white shadow-[0_0_5px_rgba(234,179,8,0.2)] backdrop-blur-lg transition-all duration-500 hover:scale-105 hover:border-purple-400 hover:bg-purple-500/20 hover:shadow-[0_0_20px_rgba(168,85,247,0.8)]"
+              href="galery.html"
+            >
+              Galerie
+            </a>
+          </li>
+          <li>
+            <a
+              class="flex h-12 w-32 items-center justify-center rounded-xl border border-yellow-500/40 bg-white/5 font-semibold text-white shadow-[0_0_5px_rgba(234,179,8,0.2)] backdrop-blur-lg transition-all duration-500 hover:scale-105 hover:border-yellow-300 hover:shadow-[0_0_20px_rgba(168,85,247,0.8)]"
+              href="#"
+            >
+              Über uns
+            </a>
+          </li>
+          <li>
+            <a
+              class="flex h-12 w-32 items-center justify-center rounded-xl border border-yellow-500/40 bg-white/5 font-semibold text-white shadow-[0_0_5px_rgba(234,179,8,0.2)] backdrop-blur-lg transition-all duration-500 hover:scale-105 hover:border-yellow-300 hover:shadow-[0_0_20px_rgba(168,85,247,0.8)]"
+              href="kontact.html"
+            >
+              Kontakt
+            </a>
           </li>
         </ul>
       </nav>
     </header>
-
+    <!--================================-->
+    <!-- SCROLLENDER GALERIE-INHALT -->
+    <!--================================-->
+    <main class="relative z-10">
+      <section
+        class="min-h-screen border-t border-yellow-500/20 bg-black/80 px-6 py-20"
+      >
+        <div class="mx-auto max-w-[1500px]">
+          <!-- Galerie-Kopfbereich -->
+          <div class="mb-16 text-center">
+            <p
+              class="mb-4 text-xs font-semibold uppercase tracking-[0.55em] text-yellow-400"
+            >
+              MEM Hypercars Rental Fleet
+            </p>
+            <h1 class="title text-6xl uppercase tracking-wider md:text-8xl">
+              Choose your machine
+            </h1>
+            <div
+              class="mx-auto mt-6 h-px w-48 bg-gradient-to-r from-transparent via-yellow-400 to-transparent"
+            ></div>
+            <p
+              class="mx-auto mt-7 max-w-3xl text-sm leading-7 text-zinc-400 md:text-base"
+            >
+              Entdecke unsere exklusive Auswahl außergewöhnlicher Hypercars.
+              Jedes Fahrzeug verbindet kompromisslose Leistung, modernes Design
+              und ein unverwechselbares Fahrerlebnis.
+            </p>
+          </div>
+          <!--================================-->
+          <!-- FAHRZEUGKARTEN -->
+          <!--================================-->
+          <!--================================-->
+          <!-- 16 FAHRZEUGE -->
+          <!--================================-->
+          <div class="space-y-24">
+            <!--================================-->
+            <!-- 01 BUGATTI DIVO -->
+            <!--================================-->
+            <article
+              class="vehicle grid items-center gap-6 lg:grid-cols-2"
+              style="--accent: 234 179 8"
+            >
+              <input class="zoom-toggle" id="vehicle-zoom-1" type="checkbox" />
+              <label class="vehicle-media rounded-[36px]" for="vehicle-zoom-1">
+                <img
+                  alt="Bugatti Divo – Ansicht 1"
+                  class="vehicle-image vehicle-image-primary"
+                  src="Galeriebilder/Bugatti Divo 1.png"
+                />
+                <img
+                  alt="Bugatti Divo – Ansicht 2"
+                  class="vehicle-image vehicle-image-secondary"
+                  src="Galeriebilder/Bugatti Divo 2.png"
+                />
+                <span
+                  class="vehicle-number absolute bottom-5 left-7 z-10 title text-7xl"
+                >
+                  01
+                </span>
+              </label>
+              <div class="vehicle-info rounded-[30px] p-7 lg:-ml-20 lg:p-9">
+                <p
+                  class="text-xs font-semibold uppercase tracking-[0.4em] text-yellow-400"
+                >
+                  Bugatti
+                </p>
+                <h2 class="title mt-2 text-5xl tracking-wider">Divo</h2>
+                <p class="mt-4 leading-7 text-zinc-300">
+                  Eine besonders fahrdynamische Interpretation des Chiron. Der
+                  Divo kombiniert den mächtigen W16-Antrieb mit stärkerem
+                  Abtrieb, überarbeiteter Aerodynamik und einem konsequenten
+                  Fokus auf schnelle Kurven.
+                </p>
+                <div class="vehicle-details">
+                  <div class="my-6 h-px bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <strong class="text-xl text-yellow-400">1500 PS</strong>
+                      <p class="text-xs text-zinc-500">Leistung</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-yellow-400">2,4 s</strong>
+                      <p class="text-xs text-zinc-500">0–100 km/h</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-yellow-400">380 km/h</strong>
+                      <p class="text-xs text-zinc-500">begrenzt</p>
+                    </div>
+                  </div>
+                  <a
+                    class="vehicle-calendar mt-7 flex items-center justify-between rounded-2xl border px-5 py-4 transition duration-500"
+                    href="kontact.html#termin"
+                  >
+                    <span>
+                      <strong class="block">Verfügbarkeit prüfen</strong>
+                      <small class="text-zinc-400"
+                        >Kalender und Mietanfrage</small
+                      >
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-7 w-7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      viewbox="0 0 24 24"
+                    >
+                      <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                      <path d="M16 3v4M8 3v4M3 10h18"></path>
+                      <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+            <!--================================-->
+            <!-- 02 ZENVO TS1 GT -->
+            <!--================================-->
+            <article
+              class="vehicle grid items-center gap-6 lg:grid-cols-2"
+              style="--accent: 34 211 238"
+            >
+              <input class="zoom-toggle" id="vehicle-zoom-2" type="checkbox" />
+              <div
+                class="vehicle-info order-2 rounded-[30px] p-7 lg:order-1 lg:-mr-20 lg:p-9"
+              >
+                <p
+                  class="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300"
+                >
+                  Zenvo
+                </p>
+                <h2 class="title mt-2 text-5xl tracking-wider">
+                  TS1 GT Sleipnir
+                </h2>
+                <p class="mt-4 leading-7 text-zinc-300">
+                  Das Jubiläumsmodell des dänischen Herstellers trägt den Namen
+                  des achtbeinigen Pferdes aus der nordischen Mythologie. Sein
+                  5,8-Liter-V8 verbindet außergewöhnliche Leistung mit einem
+                  besonders auffälligen Hypercar-Design.
+                </p>
+                <div class="vehicle-details">
+                  <div class="my-6 h-px bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <strong class="text-xl text-cyan-300">1180 PS</strong>
+                      <p class="text-xs text-zinc-500">Leistung</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-cyan-300">5,8 L</strong>
+                      <p class="text-xs text-zinc-500">V8</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-cyan-300">375+ km/h</strong>
+                      <p class="text-xs text-zinc-500">Top Speed</p>
+                    </div>
+                  </div>
+                  <a
+                    class="vehicle-calendar mt-7 flex items-center justify-between rounded-2xl border px-5 py-4 transition duration-500"
+                    href="kontact.html#termin"
+                  >
+                    <span>
+                      <strong class="block">Verfügbarkeit prüfen</strong>
+                      <small class="text-zinc-400"
+                        >Kalender und Mietanfrage</small
+                      >
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-7 w-7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      viewbox="0 0 24 24"
+                    >
+                      <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                      <path d="M16 3v4M8 3v4M3 10h18"></path>
+                      <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <label
+                class="vehicle-media order-1 rounded-[36px] lg:order-2"
+                for="vehicle-zoom-2"
+              >
+                <img
+                  alt="Zenvo TS1 GT – Ansicht 1"
+                  class="vehicle-image vehicle-image-primary"
+                  src="Galeriebilder/Zenvo TS1 GT 10th Anniversary 1.png"
+                />
+                <img
+                  alt="Zenvo TS1 GT – Ansicht 2"
+                  class="vehicle-image vehicle-image-secondary"
+                  src="Galeriebilder/Zenvo TS1 GT 10th Anniversary 2.png"
+                />
+                <span
+                  class="vehicle-number absolute bottom-5 right-7 z-10 title text-7xl"
+                >
+                  02
+                </span>
+              </label>
+            </article>
+            <!--================================-->
+            <!-- 03 NIO EP9 -->
+            <!--================================-->
+            <article
+              class="vehicle grid items-center gap-6 lg:grid-cols-2"
+              style="--accent: 59 130 246"
+            >
+              <input class="zoom-toggle" id="vehicle-zoom-3" type="checkbox" />
+              <label class="vehicle-media rounded-[36px]" for="vehicle-zoom-3">
+                <img
+                  alt="Nio EP9 – Ansicht 1"
+                  class="vehicle-image vehicle-image-primary"
+                  src="Galeriebilder/NextEV Nio EP9 1.png"
+                />
+                <img
+                  alt="Nio EP9 – Ansicht 2"
+                  class="vehicle-image vehicle-image-secondary"
+                  src="Galeriebilder/NextEV Nio EP9 2.png"
+                />
+                <span
+                  class="vehicle-number absolute bottom-5 left-7 z-10 title text-7xl"
+                >
+                  03
+                </span>
+              </label>
+              <div class="vehicle-info rounded-[30px] p-7 lg:-ml-20 lg:p-9">
+                <p
+                  class="text-xs font-semibold uppercase tracking-[0.4em] text-blue-400"
+                >
+                  Nio
+                </p>
+                <h2 class="title mt-2 text-5xl tracking-wider">EP9</h2>
+                <p class="mt-4 leading-7 text-zinc-300">
+                  Vier Elektromotoren treiben den elektrischen Hypersportwagen
+                  einzeln an. Der EP9 verbindet Le-Mans-inspiriertes Design mit
+                  enormer elektrischer Leistung und wurde für extreme
+                  Rundenzeiten entwickelt.
+                </p>
+                <div class="vehicle-details">
+                  <div class="my-6 h-px bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <strong class="text-xl text-blue-400">1360 PS</strong>
+                      <p class="text-xs text-zinc-500">Leistung</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-blue-400">&lt; 3 s</strong>
+                      <p class="text-xs text-zinc-500">0–100 km/h</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-blue-400">313 km/h</strong>
+                      <p class="text-xs text-zinc-500">Top Speed</p>
+                    </div>
+                  </div>
+                  <a
+                    class="vehicle-calendar mt-7 flex items-center justify-between rounded-2xl border px-5 py-4 transition duration-500"
+                    href="kontact.html#termin"
+                  >
+                    <span>
+                      <strong class="block">Verfügbarkeit prüfen</strong>
+                      <small class="text-zinc-400"
+                        >Kalender und Mietanfrage</small
+                      >
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-7 w-7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      viewbox="0 0 24 24"
+                    >
+                      <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                      <path d="M16 3v4M8 3v4M3 10h18"></path>
+                      <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+            <!--================================-->
+            <!-- 04 PAGANI ZONDA HP BARCHETTA -->
+            <!--================================-->
+            <article
+              class="vehicle grid items-center gap-6 lg:grid-cols-2"
+              style="--accent: 168 85 247"
+            >
+              <input class="zoom-toggle" id="vehicle-zoom-4" type="checkbox" />
+              <div
+                class="vehicle-info order-2 rounded-[30px] p-7 lg:order-1 lg:-mr-20 lg:p-9"
+              >
+                <p
+                  class="text-xs font-semibold uppercase tracking-[0.4em] text-purple-400"
+                >
+                  Pagani
+                </p>
+                <h2 class="title mt-2 text-5xl tracking-wider">
+                  Zonda HP Barchetta
+                </h2>
+                <p class="mt-4 leading-7 text-zinc-300">
+                  Ein extrem seltener offener Zonda mit gekürzter
+                  Windschutzscheibe, Carbon-Titan-Monocoque und klassischem V12.
+                  Das Modell verbindet auffällige Details mit besonders geringem
+                  Gewicht.
+                </p>
+                <div class="vehicle-details">
+                  <div class="my-6 h-px bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <strong class="text-xl text-purple-400">760+ PS</strong>
+                      <p class="text-xs text-zinc-500">Leistung</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-purple-400">7,3 L</strong>
+                      <p class="text-xs text-zinc-500">V12</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-purple-400">1250 kg</strong>
+                      <p class="text-xs text-zinc-500">Leergewicht</p>
+                    </div>
+                  </div>
+                  <a
+                    class="vehicle-calendar mt-7 flex items-center justify-between rounded-2xl border px-5 py-4 transition duration-500"
+                    href="kontact.html#termin"
+                  >
+                    <span>
+                      <strong class="block">Verfügbarkeit prüfen</strong>
+                      <small class="text-zinc-400"
+                        >Kalender und Mietanfrage</small
+                      >
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-7 w-7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      viewbox="0 0 24 24"
+                    >
+                      <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                      <path d="M16 3v4M8 3v4M3 10h18"></path>
+                      <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <label
+                class="vehicle-media order-1 rounded-[36px] lg:order-2"
+                for="vehicle-zoom-4"
+              >
+                <img
+                  alt="Pagani Zonda HP Barchetta – Ansicht 1"
+                  class="vehicle-image vehicle-image-primary"
+                  src="Galeriebilder/Pagani Zonda HP Barchetta 1.png"
+                />
+                <img
+                  alt="Pagani Zonda HP Barchetta – Ansicht 2"
+                  class="vehicle-image vehicle-image-secondary"
+                  src="Galeriebilder/Pagani Zonda HP Barchetta 2.png"
+                />
+                <span
+                  class="vehicle-number absolute bottom-5 right-7 z-10 title text-7xl"
+                >
+                  04
+                </span>
+              </label>
+            </article>
+            <!--================================-->
+            <!-- 05 KEN OKUYAMA KODE 0 -->
+            <!--================================-->
+            <article
+              class="vehicle grid items-center gap-6 lg:grid-cols-2"
+              style="--accent: 244 63 94"
+            >
+              <input class="zoom-toggle" id="vehicle-zoom-5" type="checkbox" />
+              <label class="vehicle-media rounded-[36px]" for="vehicle-zoom-5">
+                <img
+                  alt="Ken Okuyama Kode 0 – Ansicht 1"
+                  class="vehicle-image vehicle-image-primary"
+                  src="Galeriebilder/Ken Okuyama Cars Kode 0 _1.png"
+                />
+                <img
+                  alt="Ken Okuyama Kode 0 – Ansicht 2"
+                  class="vehicle-image vehicle-image-secondary"
+                  src="Galeriebilder/Ken Okuyama Cars Kode 0 _2.png"
+                />
+                <span
+                  class="vehicle-number absolute bottom-5 left-7 z-10 title text-7xl"
+                >
+                  05
+                </span>
+              </label>
+              <div class="vehicle-info rounded-[30px] p-7 lg:-ml-20 lg:p-9">
+                <p
+                  class="text-xs font-semibold uppercase tracking-[0.4em] text-rose-400"
+                >
+                  Ken Okuyama Cars
+                </p>
+                <h2 class="title mt-2 text-5xl tracking-wider">Kode 0</h2>
+                <p class="mt-4 leading-7 text-zinc-300">
+                  Der Kode 0 basiert technisch auf dem Lamborghini Aventador,
+                  trägt aber eine komplett eigenständige Karosserie. Seine
+                  kantige Form erinnert an Designikonen wie Countach und
+                  Stratos.
+                </p>
+                <div class="vehicle-details">
+                  <div class="my-6 h-px bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <strong class="text-xl text-rose-400">700 PS</strong>
+                      <p class="text-xs text-zinc-500">Leistung</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-rose-400">6,5 L</strong>
+                      <p class="text-xs text-zinc-500">V12</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-rose-400">2,9 s</strong>
+                      <p class="text-xs text-zinc-500">0–100 km/h</p>
+                    </div>
+                  </div>
+                  <a
+                    class="vehicle-calendar mt-7 flex items-center justify-between rounded-2xl border px-5 py-4 transition duration-500"
+                    href="kontact.html#termin"
+                  >
+                    <span>
+                      <strong class="block">Verfügbarkeit prüfen</strong>
+                      <small class="text-zinc-400"
+                        >Kalender und Mietanfrage</small
+                      >
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-7 w-7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      viewbox="0 0 24 24"
+                    >
+                      <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                      <path d="M16 3v4M8 3v4M3 10h18"></path>
+                      <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+            <!--================================-->
+            <!-- 06 MERCEDES-AMG PROJECT ONE -->
+            <!--================================-->
+            <article
+              class="vehicle grid items-center gap-6 lg:grid-cols-2"
+              style="--accent: 16 185 129"
+            >
+              <input class="zoom-toggle" id="vehicle-zoom-6" type="checkbox" />
+              <div
+                class="vehicle-info order-2 rounded-[30px] p-7 lg:order-1 lg:-mr-20 lg:p-9"
+              >
+                <p
+                  class="text-xs font-semibold uppercase tracking-[0.4em] text-emerald-400"
+                >
+                  Mercedes-AMG
+                </p>
+                <h2 class="title mt-2 text-5xl tracking-wider">Project One</h2>
+                <p class="mt-4 leading-7 text-zinc-300">
+                  Formel-1-Technik für die Straße: Ein hochdrehender
+                  1,6-Liter-Turbomotor arbeitet mit vier Elektromotoren
+                  zusammen. Das Carbon-Hypercar kombiniert Hybridleistung,
+                  Allradantrieb und besonders geringes Gewicht.
+                </p>
+                <div class="vehicle-details">
+                  <div class="my-6 h-px bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <strong class="text-xl text-emerald-400">1035 PS</strong>
+                      <p class="text-xs text-zinc-500">Systemleistung</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-emerald-400">11.000</strong>
+                      <p class="text-xs text-zinc-500">U/min</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-emerald-400">4×4</strong>
+                      <p class="text-xs text-zinc-500">Hybridantrieb</p>
+                    </div>
+                  </div>
+                  <a
+                    class="vehicle-calendar mt-7 flex items-center justify-between rounded-2xl border px-5 py-4 transition duration-500"
+                    href="kontact.html#termin"
+                  >
+                    <span>
+                      <strong class="block">Verfügbarkeit prüfen</strong>
+                      <small class="text-zinc-400"
+                        >Kalender und Mietanfrage</small
+                      >
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-7 w-7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      viewbox="0 0 24 24"
+                    >
+                      <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                      <path d="M16 3v4M8 3v4M3 10h18"></path>
+                      <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <label
+                class="vehicle-media order-1 rounded-[36px] lg:order-2"
+                for="vehicle-zoom-6"
+              >
+                <img
+                  alt="Mercedes-AMG Project One – Ansicht 1"
+                  class="vehicle-image vehicle-image-primary"
+                  src="Galeriebilder/Mercedes-AMG Project One 1.png"
+                />
+                <img
+                  alt="Mercedes-AMG Project One – Ansicht 2"
+                  class="vehicle-image vehicle-image-secondary"
+                  src="Galeriebilder/Mercedes-AMG Project One 2.png"
+                />
+                <span
+                  class="vehicle-number absolute bottom-5 right-7 z-10 title text-7xl"
+                >
+                  06
+                </span>
+              </label>
+            </article>
+            <!--================================-->
+            <!-- 07 RIMAC C_TWO -->
+            <!--================================-->
+            <article
+              class="vehicle grid items-center gap-6 lg:grid-cols-2"
+              style="--accent: 6 182 212"
+            >
+              <input class="zoom-toggle" id="vehicle-zoom-7" type="checkbox" />
+              <label class="vehicle-media rounded-[36px]" for="vehicle-zoom-7">
+                <img
+                  alt="Rimac C Two – Ansicht 1"
+                  class="vehicle-image vehicle-image-primary"
+                  src="Galeriebilder/Rimac C_Two 1.png"
+                />
+                <img
+                  alt="Rimac C Two – Ansicht 2"
+                  class="vehicle-image vehicle-image-secondary"
+                  src="Galeriebilder/Rimac C_Two 2.png"
+                />
+                <span
+                  class="vehicle-number absolute bottom-5 left-7 z-10 title text-7xl"
+                >
+                  07
+                </span>
+              </label>
+              <div class="vehicle-info rounded-[30px] p-7 lg:-ml-20 lg:p-9">
+                <p
+                  class="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-400"
+                >
+                  Rimac
+                </p>
+                <h2 class="title mt-2 text-5xl tracking-wider">C_Two</h2>
+                <p class="mt-4 leading-7 text-zinc-300">
+                  Vier Elektromotoren und ein großer Hochvolt-Akku machen den
+                  C_Two zu einem der leistungsstärksten elektrischen Hypercars
+                  seiner Zeit. Die Kraft wird individuell auf alle vier Räder
+                  verteilt.
+                </p>
+                <div class="vehicle-details">
+                  <div class="my-6 h-px bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <strong class="text-xl text-cyan-400">1915 PS</strong>
+                      <p class="text-xs text-zinc-500">Leistung</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-cyan-400">&lt; 2 s</strong>
+                      <p class="text-xs text-zinc-500">0–100 km/h</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-cyan-400">412 km/h</strong>
+                      <p class="text-xs text-zinc-500">Top Speed</p>
+                    </div>
+                  </div>
+                  <a
+                    class="vehicle-calendar mt-7 flex items-center justify-between rounded-2xl border px-5 py-4 transition duration-500"
+                    href="kontact.html#termin"
+                  >
+                    <span>
+                      <strong class="block">Verfügbarkeit prüfen</strong>
+                      <small class="text-zinc-400"
+                        >Kalender und Mietanfrage</small
+                      >
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-7 w-7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      viewbox="0 0 24 24"
+                    >
+                      <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                      <path d="M16 3v4M8 3v4M3 10h18"></path>
+                      <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+            <!--================================-->
+            <!-- 08 APOLLO INTENSA EMOZIONE -->
+            <!--================================-->
+            <article
+              class="vehicle grid items-center gap-6 lg:grid-cols-2"
+              style="--accent: 239 68 68"
+            >
+              <input class="zoom-toggle" id="vehicle-zoom-8" type="checkbox" />
+              <div
+                class="vehicle-info order-2 rounded-[30px] p-7 lg:order-1 lg:-mr-20 lg:p-9"
+              >
+                <p
+                  class="text-xs font-semibold uppercase tracking-[0.4em] text-red-400"
+                >
+                  Apollo
+                </p>
+                <h2 class="title mt-2 text-5xl tracking-wider">
+                  Intensa Emozione
+                </h2>
+                <p class="mt-4 leading-7 text-zinc-300">
+                  Der Apollo IE setzt bewusst auf einen frei saugenden V12 ohne
+                  Turboaufladung und ohne Hybridunterstützung. Das Ergebnis ist
+                  ein kompromissloses Fahrzeug mit direkter Reaktion und
+                  dramatischem Klang.
+                </p>
+                <div class="vehicle-details">
+                  <div class="my-6 h-px bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <strong class="text-xl text-red-400">780 PS</strong>
+                      <p class="text-xs text-zinc-500">Leistung</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-red-400">6,3 L</strong>
+                      <p class="text-xs text-zinc-500">V12-Sauger</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-red-400">10</strong>
+                      <p class="text-xs text-zinc-500">Exemplare</p>
+                    </div>
+                  </div>
+                  <a
+                    class="vehicle-calendar mt-7 flex items-center justify-between rounded-2xl border px-5 py-4 transition duration-500"
+                    href="kontact.html#termin"
+                  >
+                    <span>
+                      <strong class="block">Verfügbarkeit prüfen</strong>
+                      <small class="text-zinc-400"
+                        >Kalender und Mietanfrage</small
+                      >
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-7 w-7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      viewbox="0 0 24 24"
+                    >
+                      <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                      <path d="M16 3v4M8 3v4M3 10h18"></path>
+                      <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <label
+                class="vehicle-media order-1 rounded-[36px] lg:order-2"
+                for="vehicle-zoom-8"
+              >
+                <img
+                  alt="Apollo Intensa Emozione – Ansicht 1"
+                  class="vehicle-image vehicle-image-primary"
+                  src="Galeriebilder/Apollo Intensa Emozione 1.png"
+                />
+                <img
+                  alt="Apollo Intensa Emozione – Ansicht 2"
+                  class="vehicle-image vehicle-image-secondary"
+                  src="Galeriebilder/Apollo Intensa Emozione 2.png"
+                />
+                <span
+                  class="vehicle-number absolute bottom-5 right-7 z-10 title text-7xl"
+                >
+                  08
+                </span>
+              </label>
+            </article>
+            <!--================================-->
+            <!-- 09 ASTON MARTIN VALKYRIE -->
+            <!--================================-->
+            <article
+              class="vehicle grid items-center gap-6 lg:grid-cols-2"
+              style="--accent: 34 197 94"
+            >
+              <input class="zoom-toggle" id="vehicle-zoom-9" type="checkbox" />
+              <label class="vehicle-media rounded-[36px]" for="vehicle-zoom-9">
+                <img
+                  alt="Aston Martin Valkyrie – Ansicht 1"
+                  class="vehicle-image vehicle-image-primary"
+                  src="Galeriebilder/Aston Martin Valkyrie 1.png"
+                />
+                <img
+                  alt="Aston Martin Valkyrie – Ansicht 2"
+                  class="vehicle-image vehicle-image-secondary"
+                  src="Galeriebilder/Aston Martin Valkyrie 2.png"
+                />
+                <span
+                  class="vehicle-number absolute bottom-5 left-7 z-10 title text-7xl"
+                >
+                  09
+                </span>
+              </label>
+              <div class="vehicle-info rounded-[30px] p-7 lg:-ml-20 lg:p-9">
+                <p
+                  class="text-xs font-semibold uppercase tracking-[0.4em] text-green-400"
+                >
+                  Aston Martin
+                </p>
+                <h2 class="title mt-2 text-5xl tracking-wider">Valkyrie</h2>
+                <p class="mt-4 leading-7 text-zinc-300">
+                  Gemeinsam mit Red Bull Racing entwickelt, bringt die Valkyrie
+                  Rennsport-Aerodynamik und einen Cosworth-V12 auf die Straße.
+                  Ziel war ein außergewöhnliches Verhältnis von einem PS pro
+                  Kilogramm.
+                </p>
+                <div class="vehicle-details">
+                  <div class="my-6 h-px bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <strong class="text-xl text-green-400">1000+</strong>
+                      <p class="text-xs text-zinc-500">PS</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-green-400">6,5 L</strong>
+                      <p class="text-xs text-zinc-500">V12</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-green-400">1:1</strong>
+                      <p class="text-xs text-zinc-500">PS/kg-Ziel</p>
+                    </div>
+                  </div>
+                  <a
+                    class="vehicle-calendar mt-7 flex items-center justify-between rounded-2xl border px-5 py-4 transition duration-500"
+                    href="kontact.html#termin"
+                  >
+                    <span>
+                      <strong class="block">Verfügbarkeit prüfen</strong>
+                      <small class="text-zinc-400"
+                        >Kalender und Mietanfrage</small
+                      >
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-7 w-7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      viewbox="0 0 24 24"
+                    >
+                      <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                      <path d="M16 3v4M8 3v4M3 10h18"></path>
+                      <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+            <!--================================-->
+            <!-- 10 HENNESSEY VENOM F5 -->
+            <!--================================-->
+            <article
+              class="vehicle grid items-center gap-6 lg:grid-cols-2"
+              style="--accent: 249 115 22"
+            >
+              <input class="zoom-toggle" id="vehicle-zoom-10" type="checkbox" />
+              <div
+                class="vehicle-info order-2 rounded-[30px] p-7 lg:order-1 lg:-mr-20 lg:p-9"
+              >
+                <p
+                  class="text-xs font-semibold uppercase tracking-[0.4em] text-orange-400"
+                >
+                  Hennessey
+                </p>
+                <h2 class="title mt-2 text-5xl tracking-wider">Venom F5</h2>
+                <p class="mt-4 leading-7 text-zinc-300">
+                  Der Venom F5 entstand als komplette Neuentwicklung mit einem
+                  klaren Ziel: die 300-mph-Marke zu übertreffen. Ein leichter
+                  Aufbau trifft auf einen extrem leistungsstarken Twinturbo-V8.
+                </p>
+                <div class="vehicle-details">
+                  <div class="my-6 h-px bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <strong class="text-xl text-orange-400">1622+</strong>
+                      <p class="text-xs text-zinc-500">PS</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-orange-400">1338 kg</strong>
+                      <p class="text-xs text-zinc-500">Gewicht</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-orange-400">483 km/h</strong>
+                      <p class="text-xs text-zinc-500">Entwicklungsziel</p>
+                    </div>
+                  </div>
+                  <a
+                    class="vehicle-calendar mt-7 flex items-center justify-between rounded-2xl border px-5 py-4 transition duration-500"
+                    href="kontact.html#termin"
+                  >
+                    <span>
+                      <strong class="block">Verfügbarkeit prüfen</strong>
+                      <small class="text-zinc-400"
+                        >Kalender und Mietanfrage</small
+                      >
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-7 w-7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      viewbox="0 0 24 24"
+                    >
+                      <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                      <path d="M16 3v4M8 3v4M3 10h18"></path>
+                      <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <label
+                class="vehicle-media order-1 rounded-[36px] lg:order-2"
+                for="vehicle-zoom-10"
+              >
+                <img
+                  alt="Hennessey Venom F5 – Ansicht 1"
+                  class="vehicle-image vehicle-image-primary"
+                  src="Galeriebilder/Hennessey Venom F5 _1.png"
+                />
+                <img
+                  alt="Hennessey Venom F5 – Ansicht 2"
+                  class="vehicle-image vehicle-image-secondary"
+                  src="Galeriebilder/Hennessey Venom F5 _2.png"
+                />
+                <span
+                  class="vehicle-number absolute bottom-5 right-7 z-10 title text-7xl"
+                >
+                  10
+                </span>
+              </label>
+            </article>
+            <!--================================-->
+            <!-- 11 PININFARINA PF0 -->
+            <!--================================-->
+            <article
+              class="vehicle grid items-center gap-6 lg:grid-cols-2"
+              style="--accent: 14 165 233"
+            >
+              <input class="zoom-toggle" id="vehicle-zoom-11" type="checkbox" />
+              <label class="vehicle-media rounded-[36px]" for="vehicle-zoom-11">
+                <img
+                  alt="Pininfarina PF0 – Ansicht 1"
+                  class="vehicle-image vehicle-image-primary"
+                  src="Galeriebilder/Pininfarina PF0 _1.jpeg"
+                />
+                <img
+                  alt="Pininfarina PF0 – Ansicht 2"
+                  class="vehicle-image vehicle-image-secondary"
+                  src="Galeriebilder/Pininfarina PF0 _2.jpeg"
+                />
+                <span
+                  class="vehicle-number absolute bottom-5 left-7 z-10 title text-7xl"
+                >
+                  11
+                </span>
+              </label>
+              <div class="vehicle-info rounded-[30px] p-7 lg:-ml-20 lg:p-9">
+                <p
+                  class="text-xs font-semibold uppercase tracking-[0.4em] text-sky-400"
+                >
+                  Pininfarina
+                </p>
+                <h2 class="title mt-2 text-5xl tracking-wider">PF0</h2>
+                <p class="mt-4 leading-7 text-zinc-300">
+                  Ein italienisch gezeichnetes Elektro-Hypercar mit
+                  Antriebstechnik von Rimac. Das Konzept verbindet klassische
+                  Gran-Turismo-Eleganz mit Beschleunigungswerten auf
+                  Rennwagen-Niveau.
+                </p>
+                <div class="vehicle-details">
+                  <div class="my-6 h-px bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <strong class="text-xl text-sky-400">1927 PS</strong>
+                      <p class="text-xs text-zinc-500">Leistung</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-sky-400">&lt; 2 s</strong>
+                      <p class="text-xs text-zinc-500">0–100 km/h</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-sky-400">&lt; 12 s</strong>
+                      <p class="text-xs text-zinc-500">0–300 km/h</p>
+                    </div>
+                  </div>
+                  <a
+                    class="vehicle-calendar mt-7 flex items-center justify-between rounded-2xl border px-5 py-4 transition duration-500"
+                    href="kontact.html#termin"
+                  >
+                    <span>
+                      <strong class="block">Verfügbarkeit prüfen</strong>
+                      <small class="text-zinc-400"
+                        >Kalender und Mietanfrage</small
+                      >
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-7 w-7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      viewbox="0 0 24 24"
+                    >
+                      <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                      <path d="M16 3v4M8 3v4M3 10h18"></path>
+                      <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+            <!--================================-->
+            <!-- 12 KOENIGSEGG AGERA-NACHFOLGER -->
+            <!--================================-->
+            <article
+              class="vehicle grid items-center gap-6 lg:grid-cols-2"
+              style="--accent: 250 204 21"
+            >
+              <input class="zoom-toggle" id="vehicle-zoom-12" type="checkbox" />
+              <div
+                class="vehicle-info order-2 rounded-[30px] p-7 lg:order-1 lg:-mr-20 lg:p-9"
+              >
+                <p
+                  class="text-xs font-semibold uppercase tracking-[0.4em] text-yellow-300"
+                >
+                  Koenigsegg
+                </p>
+                <h2 class="title mt-2 text-5xl tracking-wider">
+                  Agera-Ragnarok
+                </h2>
+                <p class="mt-4 leading-7 text-zinc-300">
+                  Das angekündigte Nachfolgemodell des Agera sollte als
+                  besonders rennstreckenorientierter Hypercar erscheinen.
+                  Koenigsegg plante erneut einen extrem starken V8-Biturbo ohne
+                  Hybridunterstützung.
+                </p>
+                <div class="vehicle-details">
+                  <div class="my-6 h-px bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <strong class="text-xl text-yellow-300">V8</strong>
+                      <p class="text-xs text-zinc-500">Biturbo</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-yellow-300">1360 PS</strong>
+                      <p class="text-xs text-zinc-500">Referenzwert</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-yellow-300">Track</strong>
+                      <p class="text-xs text-zinc-500">Ausrichtung</p>
+                    </div>
+                  </div>
+                  <a
+                    class="vehicle-calendar mt-7 flex items-center justify-between rounded-2xl border px-5 py-4 transition duration-500"
+                    href="kontact.html#termin"
+                  >
+                    <span>
+                      <strong class="block">Verfügbarkeit prüfen</strong>
+                      <small class="text-zinc-400"
+                        >Kalender und Mietanfrage</small
+                      >
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-7 w-7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      viewbox="0 0 24 24"
+                    >
+                      <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                      <path d="M16 3v4M8 3v4M3 10h18"></path>
+                      <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <label
+                class="vehicle-media order-1 rounded-[36px] lg:order-2"
+                for="vehicle-zoom-12"
+              >
+                <img
+                  alt="Koenigsegg Agera-Nachfolger – Ansicht 1"
+                  class="vehicle-image vehicle-image-primary"
+                  src="Galeriebilder/koenigsegg-agera-rs-ragnarok 1.jpg"
+                />
+                <img
+                  alt="Koenigsegg Agera-Nachfolger – Ansicht 2"
+                  class="vehicle-image vehicle-image-secondary"
+                  src="Galeriebilder/koenigsegg-agera-rs-ragnarok 2.jpg"
+                />
+                <span
+                  class="vehicle-number absolute bottom-5 right-7 z-10 title text-7xl"
+                >
+                  12
+                </span>
+              </label>
+            </article>
+            <!--================================-->
+            <!-- 13 MCLAREN SPEEDTAIL -->
+            <!--================================-->
+            <article
+              class="vehicle grid items-center gap-6 lg:grid-cols-2"
+              style="--accent: 168 85 247"
+            >
+              <input class="zoom-toggle" id="vehicle-zoom-13" type="checkbox" />
+              <label class="vehicle-media rounded-[36px]" for="vehicle-zoom-13">
+                <img
+                  alt="McLaren Speedtail – Ansicht 1"
+                  class="vehicle-image vehicle-image-primary"
+                  src="Galeriebilder/McLaren Speedtail 1.png"
+                />
+                <img
+                  alt="McLaren Speedtail – Ansicht 2"
+                  class="vehicle-image vehicle-image-secondary"
+                  src="Galeriebilder/McLaren Speedtail 2.png"
+                />
+                <span
+                  class="vehicle-number absolute bottom-5 left-7 z-10 title text-7xl"
+                >
+                  13
+                </span>
+              </label>
+              <div class="vehicle-info rounded-[30px] p-7 lg:-ml-20 lg:p-9">
+                <p
+                  class="text-xs font-semibold uppercase tracking-[0.4em] text-purple-400"
+                >
+                  McLaren
+                </p>
+                <h2 class="title mt-2 text-5xl tracking-wider">Speedtail</h2>
+                <p class="mt-4 leading-7 text-zinc-300">
+                  Ein aerodynamischer Hyper-GT mit zentraler Fahrerposition wie
+                  beim legendären McLaren F1. Der Speedtail kombiniert
+                  Hybridleistung, Langstreckenkomfort und eine Geschwindigkeit
+                  von über 400 km/h.
+                </p>
+                <div class="vehicle-details">
+                  <div class="my-6 h-px bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <strong class="text-xl text-purple-400">Hybrid</strong>
+                      <p class="text-xs text-zinc-500">Antrieb</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-purple-400">12,8 s</strong>
+                      <p class="text-xs text-zinc-500">0–300 km/h</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-purple-400">403 km/h</strong>
+                      <p class="text-xs text-zinc-500">Top Speed</p>
+                    </div>
+                  </div>
+                  <a
+                    class="vehicle-calendar mt-7 flex items-center justify-between rounded-2xl border px-5 py-4 transition duration-500"
+                    href="kontact.html#termin"
+                  >
+                    <span>
+                      <strong class="block">Verfügbarkeit prüfen</strong>
+                      <small class="text-zinc-400"
+                        >Kalender und Mietanfrage</small
+                      >
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-7 w-7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      viewbox="0 0 24 24"
+                    >
+                      <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                      <path d="M16 3v4M8 3v4M3 10h18"></path>
+                      <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+            <!--================================-->
+            <!-- 14 DEVEL SIXTEEN -->
+            <!--================================-->
+            <article
+              class="vehicle grid items-center gap-6 lg:grid-cols-2"
+              style="--accent: 236 72 153"
+            >
+              <input class="zoom-toggle" id="vehicle-zoom-14" type="checkbox" />
+              <div
+                class="vehicle-info order-2 rounded-[30px] p-7 lg:order-1 lg:-mr-20 lg:p-9"
+              >
+                <p
+                  class="text-xs font-semibold uppercase tracking-[0.4em] text-pink-400"
+                >
+                  Devel
+                </p>
+                <h2 class="title mt-2 text-5xl tracking-wider">Sixteen</h2>
+                <p class="mt-4 leading-7 text-zinc-300">
+                  Der Devel Sixteen wurde mit mehreren extremen Leistungsstufen
+                  angekündigt. Die stärkste Variante sollte einen riesigen V16
+                  erhalten und ausschließlich für den Einsatz auf der
+                  Rennstrecke vorgesehen sein.
+                </p>
+                <div class="vehicle-details">
+                  <div class="my-6 h-px bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <strong class="text-xl text-pink-400">2000–5000</strong>
+                      <p class="text-xs text-zinc-500">PS angekündigt</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-pink-400">12,3 L</strong>
+                      <p class="text-xs text-zinc-500">V16-Version</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-pink-400">Track</strong>
+                      <p class="text-xs text-zinc-500">Topversion</p>
+                    </div>
+                  </div>
+                  <a
+                    class="vehicle-calendar mt-7 flex items-center justify-between rounded-2xl border px-5 py-4 transition duration-500"
+                    href="kontact.html#termin"
+                  >
+                    <span>
+                      <strong class="block">Verfügbarkeit prüfen</strong>
+                      <small class="text-zinc-400"
+                        >Kalender und Mietanfrage</small
+                      >
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-7 w-7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      viewbox="0 0 24 24"
+                    >
+                      <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                      <path d="M16 3v4M8 3v4M3 10h18"></path>
+                      <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <label
+                class="vehicle-media order-1 rounded-[36px] lg:order-2"
+                for="vehicle-zoom-14"
+              >
+                <img
+                  alt="Devel Sixteen – Ansicht 1"
+                  class="vehicle-image vehicle-image-primary"
+                  src="Galeriebilder/Devel Sixteen 1.png"
+                />
+                <img
+                  alt="Devel Sixteen – Ansicht 2"
+                  class="vehicle-image vehicle-image-secondary"
+                  src="Galeriebilder/Devel Sixteen 2.png"
+                />
+                <span
+                  class="vehicle-number absolute bottom-5 right-7 z-10 title text-7xl"
+                >
+                  14
+                </span>
+              </label>
+            </article>
+            <!--================================-->
+            <!-- 15 ASTON MARTIN VALKYRIE AMR PRO -->
+            <!--================================-->
+            <article
+              class="vehicle grid items-center gap-6 lg:grid-cols-2"
+              style="--accent: 132 204 22"
+            >
+              <input class="zoom-toggle" id="vehicle-zoom-15" type="checkbox" />
+              <label class="vehicle-media rounded-[36px]" for="vehicle-zoom-15">
+                <img
+                  alt="Aston Martin Valkyrie AMR Pro – Ansicht 1"
+                  class="vehicle-image vehicle-image-primary"
+                  src="Galeriebilder/Aston Martin Valkyrie AMR Pro 1.png"
+                />
+                <img
+                  alt="Aston Martin Valkyrie AMR Pro – Ansicht 2"
+                  class="vehicle-image vehicle-image-secondary"
+                  src="Galeriebilder/Aston Martin Valkyrie AMR Pro 2.jpg"
+                />
+                <span
+                  class="vehicle-number absolute bottom-5 left-7 z-10 title text-7xl"
+                >
+                  15
+                </span>
+              </label>
+              <div class="vehicle-info rounded-[30px] p-7 lg:-ml-20 lg:p-9">
+                <p
+                  class="text-xs font-semibold uppercase tracking-[0.4em] text-lime-400"
+                >
+                  Aston Martin
+                </p>
+                <h2 class="title mt-2 text-5xl tracking-wider">
+                  Valkyrie AMR Pro
+                </h2>
+                <p class="mt-4 leading-7 text-zinc-300">
+                  Die AMR-Pro-Variante verschärft das Valkyrie-Konzept für den
+                  ausschließlichen Einsatz auf der Rennstrecke. Überarbeitete
+                  Aerodynamik, mehr Abtrieb und eine aggressivere Abstimmung
+                  stehen im Mittelpunkt.
+                </p>
+                <div class="vehicle-details">
+                  <div class="my-6 h-px bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <strong class="text-xl text-lime-400">6,5 L</strong>
+                      <p class="text-xs text-zinc-500">Cosworth-V12</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-lime-400">25</strong>
+                      <p class="text-xs text-zinc-500">Exemplare</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-lime-400">Track only</strong>
+                      <p class="text-xs text-zinc-500">Zulassung</p>
+                    </div>
+                  </div>
+                  <a
+                    class="vehicle-calendar mt-7 flex items-center justify-between rounded-2xl border px-5 py-4 transition duration-500"
+                    href="kontact.html#termin"
+                  >
+                    <span>
+                      <strong class="block">Verfügbarkeit prüfen</strong>
+                      <small class="text-zinc-400"
+                        >Kalender und Mietanfrage</small
+                      >
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-7 w-7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      viewbox="0 0 24 24"
+                    >
+                      <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                      <path d="M16 3v4M8 3v4M3 10h18"></path>
+                      <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+            <!--================================-->
+            <!-- 16 LAMBORGHINI TERZO MILLENNIO -->
+            <!--================================-->
+            <article
+              class="vehicle grid items-center gap-6 lg:grid-cols-2"
+              style="--accent: 139 92 246"
+            >
+              <input class="zoom-toggle" id="vehicle-zoom-16" type="checkbox" />
+              <div
+                class="vehicle-info order-2 rounded-[30px] p-7 lg:order-1 lg:-mr-20 lg:p-9"
+              >
+                <p
+                  class="text-xs font-semibold uppercase tracking-[0.4em] text-violet-400"
+                >
+                  Lamborghini
+                </p>
+                <h2 class="title mt-2 text-5xl tracking-wider">
+                  Terzo Millennio
+                </h2>
+                <p class="mt-4 leading-7 text-zinc-300">
+                  Eine elektrische Zukunftsstudie, die gemeinsam mit dem MIT
+                  entwickelt wurde. Radnabenmotoren, Carbonstrukturen und
+                  Superkondensatoren zeigen, wie Lamborghini sich einen
+                  Supersportwagen kommender Generationen vorgestellt hat.
+                </p>
+                <div class="vehicle-details">
+                  <div class="my-6 h-px bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <strong class="text-xl text-violet-400">4</strong>
+                      <p class="text-xs text-zinc-500">Radnabenmotoren</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-violet-400">Carbon</strong>
+                      <p class="text-xs text-zinc-500">Struktur</p>
+                    </div>
+                    <div>
+                      <strong class="text-xl text-violet-400">Concept</strong>
+                      <p class="text-xs text-zinc-500">Elektro-Zukunft</p>
+                    </div>
+                  </div>
+                  <a
+                    class="vehicle-calendar mt-7 flex items-center justify-between rounded-2xl border px-5 py-4 transition duration-500"
+                    href="kontact.html#termin"
+                  >
+                    <span>
+                      <strong class="block">Verfügbarkeit prüfen</strong>
+                      <small class="text-zinc-400"
+                        >Kalender und Mietanfrage</small
+                      >
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-7 w-7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      viewbox="0 0 24 24"
+                    >
+                      <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                      <path d="M16 3v4M8 3v4M3 10h18"></path>
+                      <path d="m9 16 2 2 4-4"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <label
+                class="vehicle-media order-1 rounded-[36px] lg:order-2"
+                for="vehicle-zoom-16"
+              >
+                <img
+                  alt="Lamborghini Terzo Millennio – Ansicht 1"
+                  class="vehicle-image vehicle-image-primary"
+                  src="Galeriebilder/Lamborghini Terzo Millennio Concept 1.png"
+                />
+                <img
+                  alt="Lamborghini Terzo Millennio – Ansicht 2"
+                  class="vehicle-image vehicle-image-secondary"
+                  src="Galeriebilder/Lamborghini Terzo Millennio Concept 2.jpg"
+                />
+                <span
+                  class="vehicle-number absolute bottom-5 right-7 z-10 title text-7xl"
+                >
+                  16
+                </span>
+              </label>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!--================================-->
     <!-- FOOTER -->
-    <footer class="bg-zinc-900 py-10 text-center">
+    <!--================================-->
+    <footer class="relative z-10 bg-zinc-950 py-10 text-center">
       <p>© 2026 MEM HYPERCARS</p>
     </footer>
   </body>
