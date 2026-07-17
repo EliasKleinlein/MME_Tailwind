@@ -184,6 +184,18 @@
         display: none;
       }
 
+      .vehicle:has(.zoom-toggle:checked) {
+        z-index: 9999;
+      }
+
+      body:has(.zoom-toggle:checked) main {
+        z-index: 9999;
+      }
+
+      body:has(.zoom-toggle:checked) {
+        overflow: hidden;
+      }
+
       @keyframes vehicle-image-primary {
         0%,
         42% {
