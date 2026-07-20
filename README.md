@@ -12,7 +12,7 @@ Dieses Projekt wurde im Rahmen der Umschulung zum **Software Engineer** entwicke
 
 - Elias Kleinlein
 - Marco
-- Mario „Muju“ Kujoth
+- Muju
 
 ---
 
